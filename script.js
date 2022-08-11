@@ -1,7 +1,15 @@
+class useless{
+    type = "useless";
+    draw(){
+
+    }
+}
+
 class tile{
     constructor(number, x, y){
         this.x = x;
         this.y = y;
+        this.type = "neccessary";
         this.num = number;
         this.iNum;
         this.getInum();
@@ -75,7 +83,9 @@ const X = 10 + 1;
 const Y = 10 + 1;
 
 let Tiles = [];
-Tiles.push(new tile(2, Math.floor(Math.random() * (X - 1)) * getDrawingLengthX(), Math.floor(Math.random() * (Y - 1)) * getDrawingLengthY()))
+createTiles();
+addNewTile(2, Math.floor(Math.random() * (X - 1)), Math.floor(Math.random() * (Y - 1)))
+//Tiles.push(new tile( * getDrawingLengthX(), Math.floor(Math.random() * (Y - 1)) * getDrawingLengthY()))
 let keyUps = [false, false, false, false];
 
 const CENTERX = Number(WIDTH / 2 - 250);
@@ -94,6 +104,7 @@ document.addEventListener("keydown", (event) => {
         case 38:
             if(keyUps[0] != true){
                 keyUps[0] = true;
+                rearrangeTiles();
                 break;
             }
         case 39:
@@ -162,8 +173,10 @@ function GameLoop(dt){
     ctx.fillStyle = "#f00";
     //ctx.fillRect(WIDTH - CENTERX + 3, 0, CENTERX, 500);
 
-    for(let tile of Tiles){
-        tile.draw();
+    for(let row of Tiles){
+        for(let tile of row){
+            tile.draw();
+        }
     }
 
     requestAnimationFrame(GameLoop);
@@ -177,4 +190,58 @@ function getDrawingLengthX(){
 
 function getDrawingLengthY(){
     return Number(500 / (Y - 1));
+}
+
+function moveTiles(dir){
+    let x = 0;
+    let y = 0;
+    switch(dir){
+        case "N":
+            y = -getDrawingLengthY();
+            break;
+        case "S":
+            y = getDrawingLengthY();
+            break;
+        case "O":
+            x = getDrawingLengthX();
+            break;
+        case "W":
+            x = -getDrawingLengthX();
+    }
+    
+    if(y != 0){
+
+    }
+
+}
+
+function createTiles(){
+    Tiles = [];
+    aList = [];
+    for(let x = 0; x < X - 1; x++){
+        aList.push(new useless());
+    }
+    for(let y = 0; y < Y - 1; y++){
+        Tiles.push(aList);
+    }
+    //console.log(Tiles);
+}
+
+function addNewTile(number, x, y){
+    //console.log(x, y);
+    //console.log(number);
+    Tiles[x][y] = new tile(number, x*getDrawingLengthX(), y*getDrawingLengthY());
+}
+
+function rearrangeTiles(){
+    exT = Tiles;
+
+    createTiles();
+    
+    for(let row of exT){
+        for(let tile of row){
+            if(tile.type != "useless")
+            addNewTile(tile.num, Math.round(tile.x / getDrawingLengthX()), Math.round(tile.y / getDrawingLengthY()));
+        }
+    }
 }
