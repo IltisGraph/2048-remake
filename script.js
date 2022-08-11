@@ -74,11 +74,60 @@ const HEIGHT = window.innerHeight;
 const X = 10 + 1;
 const Y = 10 + 1;
 
+let keyUps = [false, false, false, false];
+
 const CENTERX = Number(WIDTH / 2 - 250);
 const CENTERY = Number(HEIGHT / 2 - 250)
 
 ctx2.width = WIDTH;
 ctx2.height = HEIGHT;
+
+
+
+document.addEventListener("keydown", (event) => {
+    let key = event.keyCode;
+    
+
+    switch(key){
+        case 38:
+            if(keyUps[0] != true){
+                keyUps[0] = true;
+                break;
+            }
+        case 39:
+            if(keyUps[1] != true){
+                keyUps[1] = true;
+                break;
+            }
+        case 40:
+            if(keyUps[2] != true){
+                keyUps[2] = true;
+                break;
+            }
+        case 37:
+            if(keyUps[3] != true){
+                keyUps[3] = true;
+                break;
+            }
+    }
+});
+
+document.addEventListener("keyup", (event) => {
+    switch(event.keyCode){
+        case 38:
+            keyUps[0] = false;
+            break;
+        case 39:
+            keyUps[1] = false;
+            break;
+        case 40:
+            keyUps[2] = false;
+            break;
+        case 37:
+            keyUps[3] = false;
+            break;
+    }
+});
 
 
 //console.log(getDrawingLengthX());
