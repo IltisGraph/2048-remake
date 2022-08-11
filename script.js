@@ -53,7 +53,7 @@ class tile{
         }
     }
     draw(){
-        ctx.drawImage(this.img[this.iNum], this.x + CENTERX, this.y + CENTERY, 50, 50);
+        ctx.drawImage(this.img[this.iNum], this.x + CENTERX, this.y + CENTERY, getDrawingLengthX(), getDrawingLengthY());
     }
    
 
@@ -74,6 +74,8 @@ const HEIGHT = window.innerHeight;
 const X = 10 + 1;
 const Y = 10 + 1;
 
+let Tiles = [];
+Tiles.push(new tile(2, Math.floor(Math.random() * (X - 1)) * getDrawingLengthX(), Math.floor(Math.random() * (Y - 1)) * getDrawingLengthY()))
 let keyUps = [false, false, false, false];
 
 const CENTERX = Number(WIDTH / 2 - 250);
@@ -160,7 +162,9 @@ function GameLoop(dt){
     ctx.fillStyle = "#f00";
     //ctx.fillRect(WIDTH - CENTERX + 3, 0, CENTERX, 500);
 
-    //t1.draw();
+    for(let tile of Tiles){
+        tile.draw();
+    }
 
     requestAnimationFrame(GameLoop);
 }
